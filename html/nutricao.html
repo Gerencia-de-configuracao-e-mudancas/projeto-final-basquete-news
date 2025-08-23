@@ -1,26 +1,112 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dietas</title>
-    <link rel="stylesheet" href="/CSS/style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planejador de Dieta</title>
+    <link rel="stylesheet" href="nutricao.css" />
 </head>
 
 <body>
     <header>
-        <div class="logo">🏀 Basquete News</div>
-        <nav class="menu">
-            <ul>
-                <li><a href="index.html">Início</a></li>
-                <li><a href="dieta.html">Dieta</a></li>
-                <li><a href="treinos.html">Treinos</a></li>
-                <li><a href="contato.html">Contato</a></li>
-            </ul>
-        </nav>
+        <h1>Planejador de Dieta Diária</h1>
     </header>
-    <h1>Dicas de alimentação saudável</h1>
+
+    <main>
+        <section>
+            <h2>Adicionar Refeição</h2>
+            <form id="dietaForm">
+                <input type="text" id="refeicao" placeholder="Nome da refeição" required />
+                <input type="time" id="horario" required />
+                <input type="number" id="calorias" placeholder="Calorias" required />
+                <textarea id="alimentos" placeholder="Alimentos incluídos" rows="3" required></textarea>
+                <button type="submit">Adicionar Refeição</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Dieta do Dia</h2>
+            <ul id="listaRefeicoes"></ul>
+            <p id="totalCalorias">Total de calorias: 0</p>
+            <button onclick="carregarModelo()">Carregar Dieta de 3500 Calorias</button>
+        </section>
+    </main>
+
+    <script>
+        const form = document.getElementById('dietaForm');
+        const lista = document.getElementById('listaRefeicoes');
+        const totalCaloriasTexto = document.getElementById('totalCalorias');
+        let totalCalorias = 0;
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const nome = document.getElementById('refeicao').value;
+            const horario = document.getElementById('horario').value;
+            const calorias = parseInt(document.getElementById('calorias').value);
+            const alimentos = document.getElementById('alimentos').value;
+
+            adicionarRefeicao(nome, horario, calorias, alimentos);
+            form.reset();
+        });
+
+        function adicionarRefeicao(nome, horario, calorias, alimentos) {
+            const item = document.createElement('li');
+            item.innerHTML = `<strong>${nome}</strong> (${horario}) - ${calorias} kcal<br/><em>${alimentos}</em>`;
+            lista.appendChild(item);
+            totalCalorias += calorias;
+            totalCaloriasTexto.textContent = `Total de calorias: ${totalCalorias}`;
+        }
+
+        function carregarModelo() {
+            lista.innerHTML = '';
+            totalCalorias = 0;
+
+            const modelo = [
+                {
+                    nome: 'Café da Manhã',
+                    horario: '07:00',
+                    calorias: 800,
+                    alimentos: 'Ovos mexidos, pão integral, leite com aveia e banana'
+                },
+                {
+                    nome: 'Lanche da Manhã',
+                    horario: '10:00',
+                    calorias: 400,
+                    alimentos: 'Iogurte natural com granola e mel'
+                },
+                {
+                    nome: 'Almoço',
+                    horario: '12:30',
+                    calorias: 1000,
+                    alimentos: 'Arroz, feijão, frango grelhado, salada, batata-doce'
+                },
+                {
+                    nome: 'Lanche da Tarde',
+                    horario: '16:00',
+                    calorias: 500,
+                    alimentos: 'Pão com pasta de amendoim e vitamina de frutas'
+                },
+                {
+                    nome: 'Jantar',
+                    horario: '19:30',
+                    calorias: 600,
+                    alimentos: 'Macarrão com carne moída, legumes e suco natural'
+                },
+                {
+                    nome: 'Ceia',
+                    horario: '22:00',
+                    calorias: 200,
+                    alimentos: 'Leite morno com bolachas integrais'
+                }
+            ];
+
+            modelo.forEach(ref => {
+                adicionarRefeicao(ref.nome, ref.horario, ref.calorias, ref.alimentos);
+            });
+        }
+    </script>
 </body>
 
 </html>
