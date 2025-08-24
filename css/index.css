@@ -82,7 +82,7 @@ section {
 }
 
 .home-container {
-    background: url("/img/design-de-plano-de-fundo-da-liga-de-jogo-de-basquete-estilo-esportivo_1017-44908.avif");
+    background: url("../img/design-de-plano-de-fundo-da-liga-de-jogo-de-basquete-estilo-esportivo_1017-44908.avif");
     background-position: center;
     background-size: cover;
 }
